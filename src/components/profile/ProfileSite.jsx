@@ -1,22 +1,28 @@
 import ClassicSite from '../../templates/sites/ClassicSite'
 import ModernSite from '../../templates/sites/ModernSite'
 import ElegantSite from '../../templates/sites/ElegantSite'
+import RoyalTemplate from '../../templates/pages/RoyalTemplate'
+import MinimalTemplate from '../../templates/pages/MinimalTemplate'
+import FloralTemplate from '../../templates/pages/FloralTemplate'
 import PrintableBiodata from './PrintableBiodata'
 
 /**
- * Dispatcher for the biodata website. Each template id maps to a structurally
- * distinct multi-page site design (different layout, navigation and colours):
- *   - classic → dark, centered, top + floating bottom nav (gold)
- *   - modern  → light app dashboard with a left sidebar (rose)
- *   - elegant → cream editorial / magazine with numbered sections (emerald)
+ * Dispatcher for the biodata output. Routes the template id to either:
+ *   - A multi-page personal website (type: "website")
+ *   - A single-page printable biodata (type: "template")
  *
- * A single, clean PrintableBiodata document is shared by all themes for the
- * Download PDF / print output.
+ * Both types share a clean PrintableBiodata for Download PDF / print.
  */
 const SITES = {
   classic: ClassicSite,
   modern: ModernSite,
   elegant: ElegantSite,
+}
+
+const PAGES = {
+  royal: RoyalTemplate,
+  minimal: MinimalTemplate,
+  floral: FloralTemplate,
 }
 
 export default function ProfileSite({
@@ -25,21 +31,46 @@ export default function ProfileSite({
   initialMode = 'dark',
   embedded = false,
 }) {
-  const Site = SITES[templateId] || ClassicSite
+  const isSite = Boolean(SITES[templateId])
+  const isPage = Boolean(PAGES[templateId])
 
+  // Website-type: full multi-page site
+  if (isSite) {
+    const Site = SITES[templateId]
+    return (
+      <>
+        <div className="print:hidden">
+          <Site
+            data={data}
+            templateId={templateId}
+            initialMode={initialMode}
+            embedded={embedded}
+          />
+        </div>
+        <div className="hidden print:block">
+          <PrintableBiodata data={data} />
+        </div>
+      </>
+    )
+  }
+
+  // Page-template type: single-page document (is its own print output)
+  if (isPage) {
+    const Page = PAGES[templateId]
+    return <Page data={data} />
+  }
+
+  // Fallback to classic website
   return (
     <>
-      {/* On-screen site (hidden when printing) */}
       <div className="print:hidden">
-        <Site
+        <ClassicSite
           data={data}
-          templateId={templateId}
+          templateId="classic"
           initialMode={initialMode}
           embedded={embedded}
         />
       </div>
-
-      {/* Clean print / PDF document (shown only when printing) */}
       <div className="hidden print:block">
         <PrintableBiodata data={data} />
       </div>

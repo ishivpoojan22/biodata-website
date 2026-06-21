@@ -2,11 +2,13 @@ import ProfileSite from './profile/ProfileSite'
 import { sampleProfile } from '../templates/sampleProfile'
 
 /**
- * A theme gallery card with a scaled-down live preview of the actual
- * multi-page profile website (rendered with sample data), plus a select
- * action.
+ * Template gallery card — works for both "website" and "template" types.
+ * Renders a scaled-down live preview with sample data so users can see the
+ * real design before choosing.
  */
 export default function TemplateCard({ template, selected, onSelect }) {
+  const isWebsite = template.type === 'website'
+
   return (
     <div
       className={`group flex flex-col overflow-hidden rounded-2xl border bg-white transition ${
@@ -16,8 +18,16 @@ export default function TemplateCard({ template, selected, onSelect }) {
       }`}
     >
       {/* Live thumbnail */}
-      <div className="relative h-64 overflow-hidden bg-neutral-950">
-        <div className="pointer-events-none absolute left-0 top-0 h-[200%] w-[200%] origin-top-left scale-50">
+      <div
+        className={`relative h-72 overflow-hidden ${isWebsite ? 'bg-neutral-950' : 'bg-gray-100'}`}
+      >
+        <div
+          className={`pointer-events-none absolute left-0 top-0 origin-top-left ${
+            isWebsite
+              ? 'h-[200%] w-[200%] scale-50'
+              : 'h-[250%] w-[250%] scale-[0.40]'
+          }`}
+        >
           <ProfileSite
             data={sampleProfile}
             templateId={template.id}
@@ -25,14 +35,26 @@ export default function TemplateCard({ template, selected, onSelect }) {
             embedded
           />
         </div>
+
+        {/* Badges */}
+        <div className="absolute left-3 top-3 z-10 flex gap-2">
+          <span
+            className={`rounded-full px-2.5 py-1 text-xs font-medium text-white shadow ${
+              isWebsite ? 'bg-indigo-600' : 'bg-amber-600'
+            }`}
+          >
+            {isWebsite ? '🌐 Website' : '📄 Template'}
+          </span>
+          {template.premium && (
+            <span className="rounded-full bg-amber-500 px-2.5 py-1 text-xs font-medium text-white shadow">
+              Premium
+            </span>
+          )}
+        </div>
+
         {selected && (
           <span className="absolute right-3 top-3 z-10 rounded-full bg-brand-600 px-2.5 py-1 text-xs font-medium text-white shadow">
-            Selected
-          </span>
-        )}
-        {template.premium && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-amber-500 px-2.5 py-1 text-xs font-medium text-white shadow">
-            Premium
+            ✓ Selected
           </span>
         )}
       </div>
@@ -44,7 +66,7 @@ export default function TemplateCard({ template, selected, onSelect }) {
             className="h-4 w-4 rounded-full ring-2 ring-white"
             style={{ backgroundColor: template.swatch }}
           />
-          <h3 className="font-serif text-xl font-semibold text-gray-900">
+          <h3 className="font-serif text-lg font-semibold text-gray-900">
             {template.name}
           </h3>
         </div>
@@ -60,7 +82,7 @@ export default function TemplateCard({ template, selected, onSelect }) {
               : 'border border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100'
           }`}
         >
-          {selected ? 'Selected' : 'Use this theme'}
+          {selected ? '✓ Selected' : 'Use this design'}
         </button>
       </div>
     </div>
