@@ -20,7 +20,7 @@ async function start() {
     await connectDB()
   } catch (err) {
     console.error('✗ Failed to connect to MongoDB:', err.message)
-    console.error('  Set MONGODB_URI in server/.env and ensure MongoDB is running.')
+    console.error('  Set MONGODB_URI in backend/.env and ensure MongoDB is running.')
     process.exit(1)
   }
 
