@@ -11,6 +11,7 @@ const ACCENTS = {
   elegant: '#10b981', // emerald
   azure: '#0ea5e9', // sky blue
   noir: '#a78bfa', // violet
+  festive: '#b91c1c', // crimson
 }
 
 export const getAccent = (templateId) => ACCENTS[templateId] || ACCENTS.classic

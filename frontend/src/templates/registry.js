@@ -61,6 +61,16 @@ export const WEBSITES = [
     swatch: '#a78bfa',
     premium: false,
   },
+  {
+    id: 'festive',
+    type: 'website',
+    name: 'Shubh Vivah',
+    description:
+      'Festive Indian-wedding design with a marigold→crimson→magenta gradient hero framed in antique gold, ornamental flourishes and warm ivory cards.',
+    accent: 'from-amber-500 via-rose-600 to-fuchsia-700',
+    swatch: '#dc2626',
+    premium: false,
+  },
 ]
 
 // ─── Page templates (single-page, printable A4 biodata) ──────────────────────

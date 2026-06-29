@@ -46,6 +46,14 @@ export const templates = [
       'Same ceremonial layout as Classic Gold — centered hero, top navbar and floating pill nav — in an elegant violet accent.',
     premium: false,
   },
+  {
+    id: 'festive',
+    type: 'website',
+    name: 'Shubh Vivah',
+    description:
+      'Festive Indian-wedding design with a marigold→crimson→magenta gradient hero framed in antique gold, ornamental flourishes and warm ivory cards.',
+    premium: false,
+  },
 
   // Page templates (single-page printable biodata)
   {
