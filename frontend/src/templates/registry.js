@@ -44,9 +44,9 @@ export const WEBSITES = [
   {
     id: 'azure',
     type: 'website',
-    name: 'Azure Wave',
+    name: 'Classic Azure',
     description:
-      'Bright, airy site with a full-width gradient hero, glassmorphic cards and floating pill tabs. Cool sky/cyan palette.',
+      'Same ceremonial layout as Classic Gold — centered hero, top navbar and floating pill nav — in a cool sky-blue accent.',
     accent: 'from-sky-400 to-blue-600',
     swatch: '#0ea5e9',
     premium: false,
@@ -54,9 +54,9 @@ export const WEBSITES = [
   {
     id: 'noir',
     type: 'website',
-    name: 'Midnight Luxe',
+    name: 'Classic Violet',
     description:
-      'Premium dark layout with glowing violet accents, glass panels and elegant serif headings. Deep slate background.',
+      'Same ceremonial layout as Classic Gold — centered hero, top navbar and floating pill nav — in an elegant violet accent.',
     accent: 'from-violet-400 to-fuchsia-600',
     swatch: '#a78bfa',
     premium: false,

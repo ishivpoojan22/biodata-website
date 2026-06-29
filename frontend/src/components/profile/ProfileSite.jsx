@@ -1,8 +1,6 @@
 import ClassicSite from '../../templates/sites/ClassicSite'
 import ModernSite from '../../templates/sites/ModernSite'
 import ElegantSite from '../../templates/sites/ElegantSite'
-import AzureSite from '../../templates/sites/AzureSite'
-import NoirSite from '../../templates/sites/NoirSite'
 import RoyalTemplate from '../../templates/pages/RoyalTemplate'
 import MinimalTemplate from '../../templates/pages/MinimalTemplate'
 import FloralTemplate from '../../templates/pages/FloralTemplate'
@@ -14,13 +12,17 @@ import PrintableBiodata from './PrintableBiodata'
  *   - A single-page printable biodata (type: "template")
  *
  * Both types share a clean PrintableBiodata for Download PDF / print.
+ *
+ * `azure` and `noir` reuse the Classic layout; their accent colour is resolved
+ * from the template id via theme.js, so they look identical to Classic Gold
+ * except for the highlight colour.
  */
 const SITES = {
   classic: ClassicSite,
   modern: ModernSite,
   elegant: ElegantSite,
-  azure: AzureSite,
-  noir: NoirSite,
+  azure: ClassicSite,
+  noir: ClassicSite,
 }
 
 const PAGES = {

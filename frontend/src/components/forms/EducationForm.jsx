@@ -32,7 +32,7 @@ export default function EducationForm() {
         label="Company"
         value={data.company}
         onChange={set('company')}
-        placeholder="Acme Corp"
+        placeholder="Google"
       />
       <TextField
         id="annualIncome"

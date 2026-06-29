@@ -33,17 +33,17 @@ export const templates = [
   {
     id: 'azure',
     type: 'website',
-    name: 'Azure Wave',
+    name: 'Classic Azure',
     description:
-      'Bright, airy site with a full-width gradient hero, glassmorphic cards and floating pill tabs. Cool sky/cyan palette.',
+      'Same ceremonial layout as Classic Gold — centered hero, top navbar and floating pill nav — in a cool sky-blue accent.',
     premium: false,
   },
   {
     id: 'noir',
     type: 'website',
-    name: 'Midnight Luxe',
+    name: 'Classic Violet',
     description:
-      'Premium dark layout with glowing violet accents, glass panels and elegant serif headings. Deep slate background.',
+      'Same ceremonial layout as Classic Gold — centered hero, top navbar and floating pill nav — in an elegant violet accent.',
     premium: false,
   },
 

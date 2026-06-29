@@ -11,7 +11,7 @@ export default function BasicInfoForm() {
         label="First Name"
         value={data.firstName}
         onChange={set('firstName')}
-        placeholder="Shiv Poojan"
+        placeholder="First Name"
         required
       />
       <TextField
@@ -19,7 +19,7 @@ export default function BasicInfoForm() {
         label="Last Name"
         value={data.lastName}
         onChange={set('lastName')}
-        placeholder="Pal"
+        placeholder="Last Name"
       />
       <SelectField
         id="gender"
