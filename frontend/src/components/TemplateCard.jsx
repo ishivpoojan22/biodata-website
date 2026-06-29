@@ -11,7 +11,8 @@ export default function TemplateCard({ template, selected, onSelect }) {
 
   return (
     <div
-      className={`group flex flex-col overflow-hidden rounded-2xl border bg-white transition ${
+      onClick={() => onSelect(template.id)}
+      className={`group flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white transition ${
         selected
           ? 'border-brand-500 ring-2 ring-brand-200'
           : 'border-gray-200 hover:border-brand-300 hover:shadow-md'
@@ -73,17 +74,15 @@ export default function TemplateCard({ template, selected, onSelect }) {
         <p className="mt-1 flex-1 text-sm text-gray-500">
           {template.description}
         </p>
-        <button
-          type="button"
-          onClick={() => onSelect(template.id)}
-          className={`mt-4 w-full rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+        <div
+          className={`mt-4 w-full rounded-lg px-4 py-2.5 text-center text-sm font-medium transition ${
             selected
-              ? 'bg-brand-600 text-white hover:bg-brand-700'
-              : 'border border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100'
+              ? 'bg-brand-600 text-white'
+              : 'border border-brand-300 bg-brand-50 text-brand-700 group-hover:bg-brand-100'
           }`}
         >
-          {selected ? '✓ Selected' : 'Use this design'}
-        </button>
+          {selected ? '✓ Selected' : 'Click to select'}
+        </div>
       </div>
     </div>
   )
