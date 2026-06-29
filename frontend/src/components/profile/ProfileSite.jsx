@@ -1,6 +1,8 @@
 import ClassicSite from '../../templates/sites/ClassicSite'
 import ModernSite from '../../templates/sites/ModernSite'
 import ElegantSite from '../../templates/sites/ElegantSite'
+import AzureSite from '../../templates/sites/AzureSite'
+import NoirSite from '../../templates/sites/NoirSite'
 import RoyalTemplate from '../../templates/pages/RoyalTemplate'
 import MinimalTemplate from '../../templates/pages/MinimalTemplate'
 import FloralTemplate from '../../templates/pages/FloralTemplate'
@@ -17,6 +19,8 @@ const SITES = {
   classic: ClassicSite,
   modern: ModernSite,
   elegant: ElegantSite,
+  azure: AzureSite,
+  noir: NoirSite,
 }
 
 const PAGES = {

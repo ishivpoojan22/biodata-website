@@ -1,14 +1,9 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import TemplateCard from '../components/TemplateCard'
-import Button from '../components/ui/Button'
 import { selectTemplate } from '../redux/slices/templateSlice'
 import { useGetTemplatesQuery } from '../services/api'
-import {
-  TEMPLATES,
-  getTemplate,
-} from '../templates/registry'
+import { TEMPLATES, getTemplate } from '../templates/registry'
 
 const TABS = [
   { key: 'all', label: 'All', emoji: '✦' },
@@ -22,7 +17,6 @@ const TABS = [
  */
 export default function Templates() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const selectedTemplate = useSelector((s) => s.template.selectedTemplate)
   const { data: apiTemplates } = useGetTemplatesQuery()
   const [activeTab, setActiveTab] = useState('all')
@@ -61,13 +55,6 @@ export default function Templates() {
             Same details work with any design.
           </p>
         </div>
-        <Button
-          to="/create"
-          disabled={!selectedTemplate}
-          className={!selectedTemplate ? 'pointer-events-none opacity-60' : ''}
-        >
-          Continue →
-        </Button>
       </div>
 
       {/* Tabs */}
@@ -114,15 +101,6 @@ export default function Templates() {
           />
         ))}
       </div>
-
-      {selectedTemplate && (
-        <div className="mt-10 flex justify-center">
-          <Button size="lg" onClick={() => navigate('/create')}>
-            Continue with{' '}
-            {getTemplate(selectedTemplate)?.name ?? 'selected'} →
-          </Button>
-        </div>
-      )}
     </div>
   )
 }

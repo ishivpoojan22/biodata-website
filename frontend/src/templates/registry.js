@@ -41,6 +41,26 @@ export const WEBSITES = [
     swatch: '#047857',
     premium: false,
   },
+  {
+    id: 'azure',
+    type: 'website',
+    name: 'Azure Wave',
+    description:
+      'Bright, airy site with a full-width gradient hero, glassmorphic cards and floating pill tabs. Cool sky/cyan palette.',
+    accent: 'from-sky-400 to-blue-600',
+    swatch: '#0ea5e9',
+    premium: false,
+  },
+  {
+    id: 'noir',
+    type: 'website',
+    name: 'Midnight Luxe',
+    description:
+      'Premium dark layout with glowing violet accents, glass panels and elegant serif headings. Deep slate background.',
+    accent: 'from-violet-400 to-fuchsia-600',
+    swatch: '#a78bfa',
+    premium: false,
+  },
 ]
 
 // ─── Page templates (single-page, printable A4 biodata) ──────────────────────

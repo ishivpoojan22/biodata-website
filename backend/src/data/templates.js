@@ -30,6 +30,22 @@ export const templates = [
       'Cream editorial / magazine style with numbered sections, big serif headings and thin rules. Calm emerald.',
     premium: false,
   },
+  {
+    id: 'azure',
+    type: 'website',
+    name: 'Azure Wave',
+    description:
+      'Bright, airy site with a full-width gradient hero, glassmorphic cards and floating pill tabs. Cool sky/cyan palette.',
+    premium: false,
+  },
+  {
+    id: 'noir',
+    type: 'website',
+    name: 'Midnight Luxe',
+    description:
+      'Premium dark layout with glowing violet accents, glass panels and elegant serif headings. Deep slate background.',
+    premium: false,
+  },
 
   // Page templates (single-page printable biodata)
   {
