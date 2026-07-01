@@ -18,6 +18,11 @@ const basicInfoSchema = new Schema(
     city: String,
     state: String,
     country: String,
+    // Astrological details (optional)
+    rashi: String,
+    nakshatra: String,
+    gotra: String,
+    manglik: String,
   },
   { _id: false },
 )
@@ -36,10 +41,14 @@ const educationSchema = new Schema(
 const familySchema = new Schema(
   {
     fatherName: String,
+    fatherOccupation: String,
     motherName: String,
+    motherOccupation: String,
     siblings: String,
     familyType: String,
     familyStatus: String,
+    familyValues: String,
+    about: String,
   },
   { _id: false },
 )
@@ -49,6 +58,7 @@ const aboutMeSchema = new Schema(
     headline: String,
     tagline: String,
     bio: String,
+    lifeStory: String,
     hobbies: String,
     lifestyle: String,
     interests: String,

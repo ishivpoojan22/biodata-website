@@ -91,6 +91,42 @@ export default function BasicInfoForm() {
         onChange={set('country')}
         placeholder="India"
       />
+
+      {/* Astrological details (optional) */}
+      <div className="sm:col-span-2 mt-2 border-t border-gray-100 pt-4">
+        <p className="text-sm font-semibold text-gray-700">
+          Astrological Details
+          <span className="ml-1 font-normal text-gray-400">(optional)</span>
+        </p>
+      </div>
+      <TextField
+        id="rashi"
+        label="Rashi (Moon Sign)"
+        value={data.rashi}
+        onChange={set('rashi')}
+        placeholder="Simha (Leo)"
+      />
+      <TextField
+        id="nakshatra"
+        label="Nakshatra"
+        value={data.nakshatra}
+        onChange={set('nakshatra')}
+        placeholder="Magha"
+      />
+      <TextField
+        id="gotra"
+        label="Gotra"
+        value={data.gotra}
+        onChange={set('gotra')}
+        placeholder="Kashyap"
+      />
+      <SelectField
+        id="manglik"
+        label="Manglik Status"
+        value={data.manglik}
+        onChange={set('manglik')}
+        options={['Non-Manglik', 'Manglik', 'Anshik Manglik', "Don't Know"]}
+      />
     </div>
   )
 }

@@ -30,6 +30,15 @@ export default function AboutMeForm() {
         rows={4}
         placeholder="A few lines about yourself, your values and what you're looking for."
       />
+      <TextAreaField
+        id="lifeStory"
+        label="My Journey / Life Story"
+        value={data.lifeStory}
+        onChange={set('lifeStory')}
+        rows={6}
+        placeholder="Where you were born, your schooling and college, the values you grew up with — write it as a short story so readers get to know you."
+        hint="This longer narrative appears on the About page so families can read your full background."
+      />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField
           id="hobbies"

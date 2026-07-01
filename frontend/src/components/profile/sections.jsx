@@ -3,6 +3,7 @@ import {
   detailRows,
   formatDate,
   fullName,
+  hasAny,
   location,
   toList,
   val,
@@ -187,6 +188,7 @@ export function HomeSection({ data, t, onContact, onDownload }) {
 
 export function AboutSection({ data, t }) {
   const { basicInfo = {}, aboutMe = {} } = data
+  const showAstro = hasAny(basicInfo, ['rashi', 'nakshatra', 'gotra', 'manglik'])
   return (
     <SectionShell
       t={t}
@@ -195,9 +197,18 @@ export function AboutSection({ data, t }) {
       subtitle={aboutMe.tagline}
     >
       {aboutMe.bio && (
-        <p className={`mb-8 max-w-3xl text-lg leading-relaxed ${t.muted}`}>
+        <p className={`mb-6 max-w-3xl text-lg leading-relaxed ${t.muted}`}>
           {aboutMe.bio}
         </p>
+      )}
+
+      {aboutMe.lifeStory && (
+        <div className="mb-8 max-w-3xl">
+          <p className={`mb-2 text-sm font-semibold ${t.text}`}>My Journey</p>
+          <p className={`whitespace-pre-line text-base leading-relaxed ${t.muted}`}>
+            {aboutMe.lifeStory}
+          </p>
+        </div>
       )}
 
       <DetailGrid
@@ -211,6 +222,18 @@ export function AboutSection({ data, t }) {
           { label: 'Mother Tongue', value: val(basicInfo.motherTongue) },
         ]}
       />
+
+      {showAstro && (
+        <div className="mt-8">
+          <p
+            className="mb-3 text-xs font-semibold uppercase tracking-[0.25em]"
+            style={{ color: t.accent }}
+          >
+            ✦ Astrological Details
+          </p>
+          <DetailGrid t={t} rows={detailRows.astro(basicInfo)} />
+        </div>
+      )}
 
       {(aboutMe.hobbies || aboutMe.interests || aboutMe.lifestyle) && (
         <div className="mt-8 space-y-4">
@@ -252,6 +275,7 @@ export function CareerSection({ data, t }) {
 }
 
 export function FamilySection({ data, t }) {
+  const { family = {} } = data
   return (
     <SectionShell
       t={t}
@@ -259,7 +283,28 @@ export function FamilySection({ data, t }) {
       title="Family"
       subtitle="A little about my family."
     >
-      <DetailGrid t={t} rows={detailRows.family(data.family)} />
+      <DetailGrid t={t} rows={detailRows.family(family)} />
+
+      {(family.familyValues || family.about) && (
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {family.familyValues && (
+            <div className={`rounded-2xl p-6 ${t.card}`}>
+              <p className={`mb-2 text-sm font-semibold ${t.text}`}>
+                Family Values
+              </p>
+              <p className={`leading-relaxed ${t.muted}`}>{family.familyValues}</p>
+            </div>
+          )}
+          {family.about && (
+            <div className={`rounded-2xl p-6 ${t.card}`}>
+              <p className={`mb-2 text-sm font-semibold ${t.text}`}>
+                Family Background
+              </p>
+              <p className={`leading-relaxed ${t.muted}`}>{family.about}</p>
+            </div>
+          )}
+        </div>
+      )}
     </SectionShell>
   )
 }

@@ -71,6 +71,36 @@ export const WEBSITES = [
     swatch: '#dc2626',
     premium: false,
   },
+  {
+    id: 'royalwed',
+    type: 'website',
+    name: 'Royal Rajwada',
+    description:
+      'Regal Rajasthani palace theme — deep maroon background, antique gold ornament and a Mughal arch photo frame. Rich and ceremonial.',
+    accent: 'from-red-900 to-yellow-700',
+    swatch: '#4a0e12',
+    premium: false,
+  },
+  {
+    id: 'mehndi',
+    type: 'website',
+    name: 'Mehndi Bagh',
+    description:
+      'Fresh henna-garden theme — light pista/cream background with deep mehndi-green, gold and terracotta accents and paisley flourishes.',
+    accent: 'from-lime-700 to-amber-600',
+    swatch: '#3f6212',
+    premium: false,
+  },
+  {
+    id: 'peacock',
+    type: 'website',
+    name: 'Peacock Mor',
+    description:
+      'Jewel-tone peacock theme — teal→royal-blue→purple gradient with gold accents, feather glows and glassy panels. Vibrant and regal.',
+    accent: 'from-teal-600 via-blue-700 to-purple-700',
+    swatch: '#0d7d7d',
+    premium: false,
+  },
 ]
 
 // ─── Page templates (single-page, printable A4 biodata) ──────────────────────

@@ -2,6 +2,9 @@ import ClassicSite from '../../templates/sites/ClassicSite'
 import ModernSite from '../../templates/sites/ModernSite'
 import ElegantSite from '../../templates/sites/ElegantSite'
 import FestiveSite from '../../templates/sites/FestiveSite'
+import RoyalWedSite from '../../templates/sites/RoyalWedSite'
+import MehndiSite from '../../templates/sites/MehndiSite'
+import PeacockSite from '../../templates/sites/PeacockSite'
 import RoyalTemplate from '../../templates/pages/RoyalTemplate'
 import MinimalTemplate from '../../templates/pages/MinimalTemplate'
 import FloralTemplate from '../../templates/pages/FloralTemplate'
@@ -25,6 +28,9 @@ const SITES = {
   azure: ClassicSite,
   noir: ClassicSite,
   festive: FestiveSite,
+  royalwed: RoyalWedSite,
+  mehndi: MehndiSite,
+  peacock: PeacockSite,
 }
 
 const PAGES = {

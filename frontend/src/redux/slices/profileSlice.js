@@ -19,6 +19,11 @@ export const emptyProfileData = {
     city: '',
     state: '',
     country: '',
+    // Astrological details (optional)
+    rashi: '',
+    nakshatra: '',
+    gotra: '',
+    manglik: '',
   },
   education: {
     education: '',
@@ -29,15 +34,20 @@ export const emptyProfileData = {
   },
   family: {
     fatherName: '',
+    fatherOccupation: '',
     motherName: '',
+    motherOccupation: '',
     siblings: '',
     familyType: '',
     familyStatus: '',
+    familyValues: '',
+    about: '',
   },
   aboutMe: {
     headline: '',
     tagline: '',
     bio: '',
+    lifeStory: '',
     hobbies: '',
     lifestyle: '',
     interests: '',

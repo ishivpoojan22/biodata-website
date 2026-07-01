@@ -78,7 +78,9 @@ export const detailRows = {
   ],
   family: (f = {}) => [
     { label: "Father's Name", value: val(f.fatherName) },
+    { label: "Father's Occupation", value: val(f.fatherOccupation) },
     { label: "Mother's Name", value: val(f.motherName) },
+    { label: "Mother's Occupation", value: val(f.motherOccupation) },
     { label: 'Siblings', value: val(f.siblings) },
     { label: 'Family Type', value: val(f.familyType) },
     { label: 'Family Status', value: val(f.familyStatus) },
@@ -89,4 +91,18 @@ export const detailRows = {
     { label: 'Preferred Occupation', value: val(p.preferredOccupation) },
     { label: 'Preferred Location', value: val(p.preferredLocation) },
   ],
+  // Astrological details live on basicInfo (kept optional).
+  astro: (b = {}) => [
+    { label: 'Rashi', value: val(b.rashi) },
+    { label: 'Nakshatra', value: val(b.nakshatra) },
+    { label: 'Gotra', value: val(b.gotra) },
+    { label: 'Manglik Status', value: val(b.manglik) },
+  ],
 }
+
+/** True when an object has at least one non-empty value among the given keys. */
+export const hasAny = (obj = {}, keys = []) =>
+  keys.some((k) => {
+    const v = obj[k]
+    return v !== null && v !== undefined && String(v).trim().length > 0
+  })

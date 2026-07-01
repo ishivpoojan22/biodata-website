@@ -1,17 +1,18 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import {
   ageFromDob,
   detailRows,
   fullName,
+  hasAny,
   location,
   toList,
   val,
 } from '../templateUtils'
 
 const ACCENT = '#b91c1c' // crimson
-const GOLD = '#c79a3a' // antique gold
+const GOLD = '#c79a3a'
 
-const NAV = [
+const SECTIONS = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'career', label: 'Career' },
@@ -21,13 +22,12 @@ const NAV = [
 ]
 
 /**
- * SHUBH VIVAH — a festive Indian-wedding themed site. A marigold→crimson→
- * magenta gradient hero framed in antique gold, ornamental flourishes around
- * every section heading, and warm ivory cards with gold borders. Distinct
- * architecture: gradient banner + centered ornamental nav + single column.
+ * SHUBH VIVAH — architecture: a single long-scroll wedding website (NOT tabbed).
+ * Every section is a full-width band that stacks vertically with alternating
+ * ivory/blush backgrounds; a fixed vertical dot-nav on the right jumps between
+ * them. Marigold→crimson→magenta gradient hero, antique-gold ornament.
  */
 export default function FestiveSite({ data = {}, embedded = false }) {
-  const [active, setActive] = useState('home')
   const {
     basicInfo = {},
     education = {},
@@ -38,201 +38,108 @@ export default function FestiveSite({ data = {}, embedded = false }) {
     photos = {},
   } = data
 
-  const go = (id) => {
-    setActive(id)
-    if (!embedded) window.scrollTo({ top: 0, behavior: 'smooth' })
+  const refs = {
+    home: useRef(null),
+    about: useRef(null),
+    career: useRef(null),
+    family: useRef(null),
+    gallery: useRef(null),
+    contact: useRef(null),
   }
 
+  const scrollTo = (id) =>
+    refs[id]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
   const age = ageFromDob(basicInfo.dateOfBirth)
+  const gallery = toList(photos.gallery)
+  const tags = [...toList(aboutMe.hobbies), ...toList(aboutMe.interests)]
+  const contactItems = [
+    contact.phone && { label: 'Phone', value: contact.phone, href: `tel:${contact.phone}` },
+    contact.email && { label: 'Email', value: contact.email, href: `mailto:${contact.email}` },
+    contact.whatsapp && {
+      label: 'WhatsApp',
+      value: contact.whatsapp,
+      href: `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}`,
+    },
+  ].filter(Boolean)
 
   return (
     <div
       className={embedded ? 'min-h-full' : 'min-h-screen'}
-      style={{
-        background:
-          'linear-gradient(180deg, #fff8ee 0%, #fdf2e3 100%)',
-        color: '#3b2412',
-        fontFamily: 'Inter, sans-serif',
-      }}
+      style={{ backgroundColor: '#fff8ee', color: '#3b2412', fontFamily: 'Inter, sans-serif' }}
     >
-      {/* Festive gradient hero */}
-      <header className="relative overflow-hidden">
-        {/* gold top rule */}
+      {/* Fixed dot nav */}
+      <nav
+        className={`${embedded ? 'absolute' : 'fixed'} right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex no-print`}
+      >
+        {SECTIONS.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => scrollTo(s.id)}
+            title={s.label}
+            className="group flex items-center gap-2"
+          >
+            <span className="text-xs font-medium opacity-0 transition group-hover:opacity-100" style={{ color: ACCENT }}>
+              {s.label}
+            </span>
+            <span
+              className="h-3 w-3 rounded-full border-2"
+              style={{ borderColor: ACCENT, backgroundColor: '#fff' }}
+            />
+          </button>
+        ))}
+      </nav>
+
+      {/* HERO band */}
+      <section ref={refs.home}>
+        <div className="h-2 w-full" style={{ background: `repeating-linear-gradient(90deg,${GOLD} 0 14px,#8a6d1f 14px 28px)` }} />
         <div
-          className="h-2 w-full"
-          style={{
-            background:
-              'repeating-linear-gradient(90deg,#c79a3a 0 14px,#8a6d1f 14px 28px)',
-          }}
-        />
-        <div
-          className="relative px-4 pb-16 pt-14 text-center text-white"
-          style={{
-            background:
-              'linear-gradient(135deg,#f59e0b 0%,#dc2626 45%,#be185d 100%)',
-          }}
+          className="relative px-4 py-16 text-center text-white"
+          style={{ background: 'linear-gradient(135deg,#f59e0b 0%,#dc2626 45%,#be185d 100%)' }}
         >
-          {/* decorative corner mandalas */}
-          <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-[6px] border-white/15" />
-          <div className="pointer-events-none absolute -right-12 top-4 h-48 w-48 rounded-full border-[6px] border-white/10" />
-
-          <p className="font-serif text-sm tracking-[0.3em] text-amber-100">
-            ॥ शुभ विवाह ॥
-          </p>
-
-          {/* photo in gold frame */}
+          <p className="font-serif text-sm tracking-[0.3em] text-amber-100">॥ शुभ विवाह ॥</p>
           <div className="mx-auto mt-6 w-fit rounded-full p-1.5" style={{ background: GOLD }}>
             {photos.profilePhoto ? (
-              <img
-                src={photos.profilePhoto}
-                alt={fullName(basicInfo)}
-                className="h-32 w-32 rounded-full object-cover ring-4 ring-white/70"
-              />
+              <img src={photos.profilePhoto} alt={fullName(basicInfo)} className="h-36 w-36 rounded-full object-cover ring-4 ring-white/70" />
             ) : (
-              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-white/20 font-serif text-5xl font-bold ring-4 ring-white/70">
+              <div className="flex h-36 w-36 items-center justify-center rounded-full bg-white/20 font-serif text-5xl font-bold ring-4 ring-white/70">
                 {(basicInfo.firstName?.[0] || '?').toUpperCase()}
               </div>
             )}
           </div>
-
-          <h1 className="mt-5 font-serif text-4xl font-bold drop-shadow sm:text-5xl">
-            {fullName(basicInfo)}
-          </h1>
-
-          {/* ornamental divider */}
-          <Flourish className="my-3 text-amber-100" />
-
+          <h1 className="mt-5 font-serif text-5xl font-bold drop-shadow">{fullName(basicInfo)}</h1>
           {(aboutMe.headline || education.occupation) && (
-            <p className="text-lg text-amber-50">
-              {val(aboutMe.headline || education.occupation, '')}
-            </p>
+            <p className="mt-2 text-lg text-amber-50">{val(aboutMe.headline || education.occupation, '')}</p>
           )}
-          {aboutMe.tagline && (
-            <p className="mt-2 font-serif text-base italic text-amber-100/90">
-              “{aboutMe.tagline}”
-            </p>
-          )}
+          {aboutMe.tagline && <p className="mt-2 font-serif italic text-amber-100/90">“{aboutMe.tagline}”</p>}
+
+          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              { label: 'Age', value: age ? `${age} yrs` : '—' },
+              { label: 'Height', value: val(basicInfo.height) },
+              { label: 'Diet', value: val(basicInfo.diet) },
+              { label: 'City', value: val(basicInfo.city) },
+            ].map((f) => (
+              <div key={f.label} className="rounded-xl bg-white/15 px-3 py-3 backdrop-blur">
+                <p className="text-[10px] uppercase tracking-wide text-amber-100">{f.label}</p>
+                <p className="mt-0.5 font-semibold text-white">{f.value}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        {/* gold bottom rule */}
-        <div
-          className="h-2 w-full"
-          style={{
-            background:
-              'repeating-linear-gradient(90deg,#c79a3a 0 14px,#8a6d1f 14px 28px)',
-          }}
-        />
-      </header>
+        <div className="h-2 w-full" style={{ background: `repeating-linear-gradient(90deg,${GOLD} 0 14px,#8a6d1f 14px 28px)` }} />
+      </section>
 
-      {/* Ornamental nav */}
-      <div className="px-4 no-print">
-        <div className="mx-auto -mt-0 flex max-w-3xl flex-wrap justify-center gap-1 py-4">
-          {NAV.map((n) => {
-            const on = active === n.id
-            return (
-              <button
-                key={n.id}
-                onClick={() => go(n.id)}
-                className="rounded-full px-4 py-2 text-sm font-semibold transition"
-                style={
-                  on
-                    ? { backgroundColor: ACCENT, color: '#fff' }
-                    : { color: '#7c2d12' }
-                }
-              >
-                {n.label}
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
-      <main className="mx-auto max-w-3xl px-4 pb-16">
-        <Content
-          active={active}
-          basicInfo={basicInfo}
-          education={education}
-          family={family}
-          aboutMe={aboutMe}
-          partner={partner}
-          contact={contact}
-          photos={photos}
-          age={age}
-          onContact={() => go('contact')}
-        />
-      </main>
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-
-function Flourish({ className = '' }) {
-  return (
-    <div className={`flex items-center justify-center gap-3 ${className}`}>
-      <span className="h-px w-12" style={{ background: 'currentColor', opacity: 0.5 }} />
-      <span className="text-lg">❁</span>
-      <span className="h-px w-12" style={{ background: 'currentColor', opacity: 0.5 }} />
-    </div>
-  )
-}
-
-function GoldCard({ label, value }) {
-  return (
-    <div
-      className="rounded-xl bg-white p-5 shadow-sm"
-      style={{ border: `1px solid ${GOLD}55` }}
-    >
-      <p className="text-xs uppercase tracking-wide" style={{ color: GOLD }}>
-        {label}
-      </p>
-      <p className="mt-1 text-lg font-semibold" style={{ color: '#3b2412' }}>
-        {value}
-      </p>
-    </div>
-  )
-}
-
-function Grid({ rows }) {
-  return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      {rows.map((r) => (
-        <GoldCard key={r.label} label={r.label} value={r.value} />
-      ))}
-    </div>
-  )
-}
-
-function SectionTitle({ title }) {
-  return (
-    <div className="mb-8 text-center" style={{ color: ACCENT }}>
-      <h2 className="font-serif text-3xl font-bold">{title}</h2>
-      <Flourish className="mt-3" />
-    </div>
-  )
-}
-
-function Content({
-  active,
-  basicInfo,
-  education,
-  family,
-  aboutMe,
-  partner,
-  contact,
-  photos,
-  age,
-  onContact,
-}) {
-  if (active === 'about') {
-    return (
-      <section className="pt-4">
-        <SectionTitle title="About Me" />
-        {aboutMe.bio && (
-          <p className="mx-auto mb-6 max-w-2xl text-center text-lg leading-relaxed text-amber-900/80">
-            {aboutMe.bio}
-          </p>
+      {/* ABOUT band (ivory) */}
+      <Band innerRef={refs.about} title="About Me">
+        {aboutMe.bio && <p className="mx-auto mb-8 max-w-2xl text-center text-lg leading-relaxed text-amber-900/80">{aboutMe.bio}</p>}
+        {aboutMe.lifeStory && (
+          <div className="mx-auto mb-8 max-w-2xl">
+            <p className="mb-2 text-center font-serif text-lg font-semibold" style={{ color: ACCENT }}>My Journey</p>
+            <p className="whitespace-pre-line text-center leading-relaxed text-amber-900/80">{aboutMe.lifeStory}</p>
+          </div>
         )}
-        <Grid
+        <Rows
           rows={[
             { label: 'Gender', value: val(basicInfo.gender) },
             { label: 'Religion', value: val(basicInfo.religion) },
@@ -240,153 +147,114 @@ function Content({
             { label: 'Mother Tongue', value: val(basicInfo.motherTongue) },
           ]}
         />
-        {(aboutMe.hobbies || aboutMe.interests) && (
+        {hasAny(basicInfo, ['rashi', 'nakshatra', 'gotra', 'manglik']) && (
+          <div className="mt-6">
+            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.25em]" style={{ color: ACCENT }}>✦ Astrological Details</p>
+            <Rows rows={detailRows.astro(basicInfo)} />
+          </div>
+        )}
+        {tags.length > 0 && (
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {[...toList(aboutMe.hobbies), ...toList(aboutMe.interests)].map(
-              (tag, i) => (
-                <span
-                  key={i}
-                  className="rounded-full px-3 py-1.5 text-sm font-medium"
-                  style={{ backgroundColor: '#fde68a', color: '#92400e' }}
-                >
-                  {tag}
-                </span>
-              ),
+            {tags.map((t, i) => (
+              <span key={i} className="rounded-full px-3 py-1.5 text-sm font-medium" style={{ backgroundColor: '#fde68a', color: '#92400e' }}>
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </Band>
+
+      {/* CAREER band (blush) */}
+      <Band innerRef={refs.career} title="Career" tint="#fdeef0">
+        <Rows rows={detailRows.education(education)} />
+      </Band>
+
+      {/* FAMILY band (ivory) */}
+      <Band innerRef={refs.family} title="Family">
+        <Rows rows={detailRows.family(family)} />
+        {(family.familyValues || family.about) && (
+          <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
+            {family.familyValues && (
+              <div className="rounded-xl bg-white p-5 shadow-sm" style={{ border: `1px solid ${GOLD}55` }}>
+                <p className="mb-1 font-semibold" style={{ color: ACCENT }}>Family Values</p>
+                <p className="leading-relaxed text-amber-900/80">{family.familyValues}</p>
+              </div>
+            )}
+            {family.about && (
+              <div className="rounded-xl bg-white p-5 shadow-sm" style={{ border: `1px solid ${GOLD}55` }}>
+                <p className="mb-1 font-semibold" style={{ color: ACCENT }}>Family Background</p>
+                <p className="leading-relaxed text-amber-900/80">{family.about}</p>
+              </div>
             )}
           </div>
         )}
-      </section>
-    )
-  }
+      </Band>
 
-  if (active === 'career') {
-    return (
-      <section className="pt-4">
-        <SectionTitle title="Career" />
-        <Grid rows={detailRows.education(education)} />
-      </section>
-    )
-  }
-
-  if (active === 'family') {
-    return (
-      <section className="pt-4">
-        <SectionTitle title="Family" />
-        <Grid rows={detailRows.family(family)} />
-      </section>
-    )
-  }
-
-  if (active === 'gallery') {
-    const gallery = toList(photos.gallery)
-    return (
-      <section className="pt-4">
-        <SectionTitle title="Gallery" />
+      {/* GALLERY band (blush) */}
+      <Band innerRef={refs.gallery} title="Gallery" tint="#fdeef0">
         {gallery.length ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3">
             {gallery.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`Gallery ${i + 1}`}
-                className="aspect-square w-full rounded-xl object-cover"
-                style={{ border: `3px solid ${GOLD}` }}
-              />
+              <img key={i} src={src} alt={`Gallery ${i + 1}`} className="aspect-square w-full rounded-xl object-cover" style={{ border: `3px solid ${GOLD}` }} />
             ))}
           </div>
         ) : (
           <p className="text-center text-amber-900/60">No photos added yet.</p>
         )}
-      </section>
-    )
-  }
+      </Band>
 
-  if (active === 'contact') {
-    const items = [
-      contact.phone && {
-        label: 'Phone',
-        value: contact.phone,
-        href: `tel:${contact.phone}`,
-      },
-      contact.email && {
-        label: 'Email',
-        value: contact.email,
-        href: `mailto:${contact.email}`,
-      },
-      contact.whatsapp && {
-        label: 'WhatsApp',
-        value: contact.whatsapp,
-        href: `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}`,
-      },
-    ].filter(Boolean)
-    return (
-      <section className="pt-4">
-        <SectionTitle title="Partner & Contact" />
-        <Grid rows={detailRows.partner(partner)} />
-        {items.length > 0 && (
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {items.map((it) => (
-              <a
-                key={it.label}
-                href={it.href}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl bg-white p-5 text-center shadow-sm transition hover:-translate-y-0.5"
-                style={{ border: `1px solid ${GOLD}55` }}
-              >
-                <p className="text-xs uppercase tracking-wide" style={{ color: GOLD }}>
-                  {it.label}
-                </p>
-                <p className="mt-1 break-words font-semibold" style={{ color: '#3b2412' }}>
-                  {it.value}
-                </p>
+      {/* CONTACT band (ivory) */}
+      <Band innerRef={refs.contact} title="Partner & Contact">
+        <Rows rows={detailRows.partner(partner)} />
+        {contactItems.length > 0 && (
+          <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+            {contactItems.map((it) => (
+              <a key={it.label} href={it.href} target="_blank" rel="noreferrer" className="rounded-xl bg-white p-5 text-center shadow-sm transition hover:-translate-y-0.5" style={{ border: `1px solid ${GOLD}55` }}>
+                <p className="text-xs uppercase tracking-wide" style={{ color: GOLD }}>{it.label}</p>
+                <p className="mt-1 break-words font-semibold">{it.value}</p>
               </a>
             ))}
           </div>
         )}
-      </section>
-    )
-  }
+        <div className="mt-8 flex justify-center no-print">
+          <button onClick={() => window.print()} className="rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md" style={{ backgroundColor: ACCENT }}>
+            ⬇ Download PDF
+          </button>
+        </div>
+      </Band>
+    </div>
+  )
+}
 
-  // Home / overview
-  const facts = [
-    { label: 'Age', value: age ? `${age} yrs` : '—' },
-    { label: 'Height', value: val(basicInfo.height) },
-    { label: 'Diet', value: val(basicInfo.diet) },
-    { label: 'Location', value: location(basicInfo) },
-  ]
+// ---------------------------------------------------------------------------
+
+function Band({ innerRef, title, children, tint = '#fff8ee' }) {
   return (
-    <section className="pt-4">
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {facts.map((f) => (
-          <GoldCard key={f.label} label={f.label} value={f.value} />
-        ))}
-      </div>
-
-      {aboutMe.bio && (
-        <p className="mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-amber-900/80">
-          {aboutMe.bio}
-        </p>
-      )}
-
-      <Flourish className="my-8" />
-
-      <div className="flex justify-center gap-3 no-print">
-        <button
-          onClick={onContact}
-          className="rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md"
-          style={{ backgroundColor: ACCENT }}
-        >
-          ❤ Get in touch
-        </button>
-        <button
-          onClick={() => window.print()}
-          className="rounded-full bg-white px-6 py-3 text-sm font-semibold shadow-sm"
-          style={{ border: `1px solid ${GOLD}`, color: '#92400e' }}
-        >
-          ⬇ Download PDF
-        </button>
+    <section ref={innerRef} className="px-4 py-14" style={{ backgroundColor: tint }}>
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-8 text-center" style={{ color: ACCENT }}>
+          <h2 className="font-serif text-3xl font-bold">{title}</h2>
+          <div className="mt-3 flex items-center justify-center gap-3">
+            <span className="h-px w-12" style={{ background: GOLD }} />
+            <span className="text-lg" style={{ color: GOLD }}>❁</span>
+            <span className="h-px w-12" style={{ background: GOLD }} />
+          </div>
+        </div>
+        {children}
       </div>
     </section>
+  )
+}
+
+function Rows({ rows }) {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {rows.map((r) => (
+        <div key={r.label} className="rounded-xl bg-white p-5 shadow-sm" style={{ border: `1px solid ${GOLD}55` }}>
+          <p className="text-xs uppercase tracking-wide" style={{ color: GOLD }}>{r.label}</p>
+          <p className="mt-1 text-lg font-semibold">{r.value}</p>
+        </div>
+      ))}
+    </div>
   )
 }

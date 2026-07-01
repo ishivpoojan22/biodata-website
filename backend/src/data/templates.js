@@ -54,6 +54,30 @@ export const templates = [
       'Festive Indian-wedding design with a marigold→crimson→magenta gradient hero framed in antique gold, ornamental flourishes and warm ivory cards.',
     premium: false,
   },
+  {
+    id: 'royalwed',
+    type: 'website',
+    name: 'Royal Rajwada',
+    description:
+      'Regal Rajasthani palace theme — deep maroon background, antique gold ornament and a Mughal arch photo frame. Rich and ceremonial.',
+    premium: false,
+  },
+  {
+    id: 'mehndi',
+    type: 'website',
+    name: 'Mehndi Bagh',
+    description:
+      'Fresh henna-garden theme — light pista/cream background with deep mehndi-green, gold and terracotta accents and paisley flourishes.',
+    premium: false,
+  },
+  {
+    id: 'peacock',
+    type: 'website',
+    name: 'Peacock Mor',
+    description:
+      'Jewel-tone peacock theme — teal→royal-blue→purple gradient with gold accents, feather glows and glassy panels. Vibrant and regal.',
+    premium: false,
+  },
 
   // Page templates (single-page printable biodata)
   {
