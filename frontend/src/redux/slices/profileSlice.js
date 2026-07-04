@@ -9,6 +9,7 @@ export const emptyProfileData = {
   basicInfo: {
     firstName: '',
     lastName: '',
+    age: '',
     gender: '',
     dateOfBirth: '',
     height: '',
@@ -27,6 +28,7 @@ export const emptyProfileData = {
   },
   education: {
     education: '',
+    school: '',
     college: '',
     occupation: '',
     company: '',

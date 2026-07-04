@@ -6,6 +6,7 @@ export const sampleProfile = {
   basicInfo: {
     firstName: 'Aarav',
     lastName: 'Sharma',
+    age: '25',
     gender: 'Male',
     dateOfBirth: '1995-06-12',
     height: `5'10" / 178 cm`,
@@ -23,6 +24,7 @@ export const sampleProfile = {
   },
   education: {
     education: 'B.Tech, Computer Science',
+    school: 'St. Vincent\'s High School',
     college: 'COEP Pune',
     occupation: 'Software Engineer',
     company: 'TechNova Pvt Ltd',

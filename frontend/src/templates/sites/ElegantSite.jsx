@@ -251,7 +251,7 @@ function Content({ active, activeIndex, data }) {
   }
 
   // Home — editorial cover
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
   return (
     <section className="text-center">
       <p className="text-xs uppercase tracking-[0.4em]" style={{ color: ACCENT }}>

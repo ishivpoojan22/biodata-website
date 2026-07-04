@@ -14,6 +14,13 @@ export default function EducationForm() {
         placeholder="B.Tech, Computer Science"
       />
       <TextField
+        id="school"
+        label="School"
+        value={data.school}
+        onChange={set('school')}
+        placeholder="St. Mary's High School"
+      />
+      <TextField
         id="college"
         label="College / University"
         value={data.college}

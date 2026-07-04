@@ -44,7 +44,7 @@ export default function PeacockSite({ data = {}, embedded = false }) {
     if (!embedded) window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
 
   return (
     <div

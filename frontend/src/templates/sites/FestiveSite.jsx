@@ -50,7 +50,7 @@ export default function FestiveSite({ data = {}, embedded = false }) {
   const scrollTo = (id) =>
     refs[id]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
   const gallery = toList(photos.gallery)
   const tags = [...toList(aboutMe.hobbies), ...toList(aboutMe.interests)]
   const contactItems = [

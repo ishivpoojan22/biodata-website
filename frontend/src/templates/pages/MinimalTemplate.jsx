@@ -23,7 +23,7 @@ export default function MinimalTemplate({ data = {} }) {
     contact = {},
     photos = {},
   } = data
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
   const gallery = toList(photos.gallery)
 
   return (

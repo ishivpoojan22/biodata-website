@@ -21,6 +21,13 @@ export default function BasicInfoForm() {
         onChange={set('lastName')}
         placeholder="Last Name"
       />
+      <TextField
+        id="age"
+        label="Age"
+        value={data.age}
+        onChange={set('age')}
+        placeholder="Age"
+      />
       <SelectField
         id="gender"
         label="Gender"

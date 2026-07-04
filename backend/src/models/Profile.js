@@ -8,6 +8,7 @@ const basicInfoSchema = new Schema(
   {
     firstName: String,
     lastName: String,
+    age: Number,
     gender: String,
     dateOfBirth: String,
     height: String,
@@ -30,6 +31,7 @@ const basicInfoSchema = new Schema(
 const educationSchema = new Schema(
   {
     education: String,
+    school: String,
     college: String,
     occupation: String,
     company: String,

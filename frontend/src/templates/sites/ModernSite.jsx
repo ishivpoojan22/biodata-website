@@ -289,7 +289,7 @@ function MainContent({
   }
 
   // Overview / home
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
   const facts = [
     { label: 'Age', value: age ? `${age} yrs` : '—' },
     { label: 'Height', value: val(basicInfo.height) },

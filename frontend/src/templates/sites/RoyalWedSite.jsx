@@ -39,7 +39,7 @@ export default function RoyalWedSite({ data = {}, embedded = false }) {
     photos = {},
   } = data
 
-  const age = ageFromDob(basicInfo.dateOfBirth)
+  const age = basicInfo.age || ageFromDob(basicInfo.dateOfBirth)
 
   return (
     <div

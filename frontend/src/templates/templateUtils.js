@@ -71,6 +71,7 @@ export const detailRows = {
   ],
   education: (e = {}) => [
     { label: 'Education', value: val(e.education) },
+    { label: 'School', value: val(e.school) },
     { label: 'College', value: val(e.college) },
     { label: 'Occupation', value: val(e.occupation) },
     { label: 'Company', value: val(e.company) },
